@@ -6,3 +6,4 @@ output.csv
 output.txt
 identified_roundabouts.csv
 
+*.csv
