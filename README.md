@@ -16,7 +16,7 @@ This project aims to develop a model to identify roundabouts in road networks us
 1. **Clone the repository**
 2. **Install dependencies:**
    ```bash
-   pip install pandas numpy matplotlib scipy
+   pip install pandas numpy matplotlib scipy flask 
    ```
 
 ### Usage
@@ -36,3 +36,53 @@ Data Loading and Preprocessing: Load GPS probe data from CSV files containing sp
 Vector Field Creation: Calculate velocity components (vx and vy) from heading data. Interpolate the velocity components onto a finer grid for higher resolution analysis.
 
 Curl Calculations: Compute 2D curl to identify rotational movements, which are key indicators of roundabouts.
+
+# Roundabout Detection API
+**Running the API**
+To start the API, run the following command:
+```bash
+python app.py
+```
+The API will be available at http://127.0.0.1:5000.
+This API allows you to estimate roundabout locations based on probe data and retrieve all detected roundabouts from the dataset.
+
+### 1. Estimate Roundabout Location
+
+**Endpoint:** `/roundabout/<int:i>`  
+**Method:** `GET`  
+**Description:** Estimates the location of roundabouts based on probe data in a specified folder.  
+**Parameters:**
+- `i` (path parameter): The folder number (integer) within `./data/probe_data/` that contains the CSV files.
+
+**Example Request:**
+
+```bash
+curl -X GET http://127.0.0.1:5000/roundabout/1
+```
+Example Response:
+{
+  "estimated_location": "location_coordinates_here"
+}
+
+### 2. Get All Roundabouts
+**Endpoint:** `/roundabouts`
+**Method:** `GET`
+**Description:** Retrieves all roundabouts found in the dataset.
+
+**Example Request:**
+
+```bash
+curl -X GET http://127.0.0.1:5000/roundabouts
+```
+
+Example Response:
+{
+  "roundabouts": [
+    {
+      "location": "roundabout_1_coordinates"
+    },
+    {
+      "location": "roundabout_2_coordinates"
+    }
+  ]
+}
